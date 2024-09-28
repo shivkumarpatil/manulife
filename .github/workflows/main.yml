@@ -1,0 +1,26 @@
+name: Example Workflow
+on:
+  workflow_dispatch:
+    inputs:
+      example_input:
+        description: 'An example input'
+        required: true
+        default: 'World'
+
+jobs:
+  example-job:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v2
+
+      - name: Print input
+        id: print-input
+        run: echo "Input value:${{ github.event.inputs.example_input }}"
+
+      - name: Set output
+        id: set-output
+        run: echo "example_output=Hello, ${{ github.event.inputs.example_input }}" >> $GITHUB_ENV
+
+      - name: Use output
+        run: echo "Output value:${{ env.example_output }}"
